@@ -157,7 +157,7 @@ def beautifier_CLI(path_file, **options):
             d.write(latex_result)
         logger.info('file save as' + str(file_to_save))
     run(save,
-        options.get('no_save', False),
+        not options.get('no_save', False),
         path_file
         )
 

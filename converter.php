@@ -71,7 +71,7 @@
                         echo '<p>Scirpt run in '.round(microtime(true) - $start_time, 3).'s</p>';
                         $result = htmlspecialchars(fread($fresult,filesize($pathfresult)));
                         echo '<label for="result">Result :</label><br />';
-                        echwo '<textarea name="result" placeholder="result">'.($result).'</textarea>';
+                        echo '<textarea name="result" placeholder="result">'.($result).'</textarea>';
                     }
                     fclose($fresult);
 
