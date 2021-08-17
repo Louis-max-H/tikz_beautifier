@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <?php include("header.php"); ?>
 
     <body>
@@ -62,21 +61,47 @@ python3 main.py example_tikz/tikz_hug
 
 		<p>Of course, you can replace example_tikz/tikz_hug by your file to convert.</p>
 		<h5>Command-line options :</h5>
-		<p>-no-save : Don't save file after conversion<br />
-			-tab TAB : Change ident by TAB (ex -tab &quot;   &quot;)<br />
-			-round INT : Change the number of digit, (ex -round 2)(set to -1 if you don't want to round numbers<br />
-			-no-color : Don't set colors names<br />
-			-hide : Dont show result in terminal<br />
-			-no-sort : Dont sort \drawn command in Tikz<br />
-			-ordinate-first : sort the blocks by ordinate then by abscissa (also -of)<br />
-			-decreasing-abscissa : sorted abscissa in decreasing order (also -da)<br />
-			-decreasing-ordinate : sorted ordinate in decreasing order (also -do)<br />
-			-by-type : Sort \drawn command in Tikz by category (circle, line, rectangle, etc...)<br />
-			-no-clip : Dont define a limit for the picture<br />
-			-clip-fix : Static margin for the clip<br />
-			-clip-dyn : Dynamical clip margin based on percentage of element size (margin = clip-fix + max(width, lenght) * clip-dyn)<br />
-			-tikz-only : Remove default import for Latex
-		</p>
+		<pre><code class="language-sh">
+positional arguments:<br />
+  path                  the path of the file to convert<br />
+<br />
+optional arguments:<br />
+  -h, --help            show this help message and exit<br />
+  -output OUTPUT, -o OUTPUT<br />
+                        file to save, created if dont exist (default: None)<br />
+<br />
+Formatting:<br />
+  -tab TAB              the tabulation you want (default: )<br />
+  -tikz-only, -to       remove Latex default importation (default: False)<br />
+  -no-strip, -ns        keep extra spaces (default: False)<br />
+<br />
+Clean up:<br />
+  -round ROUND          round to ndigits precision after the decimal point, set -1 if you didn't want to round<br />
+                        number (default: 3)<br />
+  -no-color             dont gives a name to colors (default: False)<br />
+<br />
+Commande line settings:<br />
+  -v                    level of debugging, -v to -vv (no output, infos, debug) (default: 0)<br />
+  -no-save              dont saves in the same location as the source (default: False)<br />
+  -hide-source, -hs     show source from input (default: False)<br />
+  -hide-output, -ho     dont show the result in the terminal (default: False)<br />
+<br />
+Sorting:<br />
+  -no-sort              dont sort \drawn (default: False)<br />
+  -bytype               separates blocks by category (circle, line, rectangle, etc...) (default: False)<br />
+  -ordinate-first, -of  sort the blocks by ordinate then by abscissa (default: False)<br />
+  -decreasing-abscissa, -da<br />
+                        sorted abscissa in decreasing order (default: False)<br />
+  -decreasing-ordinate, -do<br />
+                        sorted ordinate in decreasing order (default: False)<br />
+<br />
+Clipping (experimental):<br />
+  -no-clip              dont set automatic clip (default: False)<br />
+  -clip-fix CLIP_FIX    specifies a fixed margin (default: 1)<br />
+  -clip-dyn CLIP_DYN    specifies a dynamic margin, in percent (default: 0.1)<br />
+<br />
+Enjoy !
+		</code></pre>
 
 		<h3>To do :</h3>
 		<ul>

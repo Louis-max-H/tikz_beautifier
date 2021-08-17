@@ -22,7 +22,7 @@
             $ordi_order = get_input("ordi_order", array("ascending" ,"descending"), "ascending"); 
             $by_type = get_input("by_type", $tf, "false"); 
             $latex = get_input("latex", $tf, "true"); 
-            $clip = get_input("clip", $tf, "true"); 
+            $clip = get_input("clip", $tf, "false"); 
             $clip_fix = (isset($_POST["clip_fix"]) and is_float($_POST["clip_fix"]) ? $_POST["clip_fix"] : "1");  
             $clip_dyn = (isset($_POST["clip_dyn"]) and is_float($_POST["clip_dyn"]) ? $_POST["clip_dyn"] : "0.10");  
             $tikz = (isset($_POST["tikz"]) ? htmlspecialchars($_POST["tikz"]) : "");
@@ -49,21 +49,21 @@
                     fclose($tikz_file);
                     $command = 'python3 python/main.py ./tikz_to_convert -tab "'.($ident).'" -round "'.($round).'" ' ;
                     $command = $command.($color=="true" ?'':'-no-color ').($sort=="true" ?'': '-no-sort ').($order=="abscissa" ?'': '-ordinate-last ');
-                    $command = $command.($absci_order=="ascending" ?'': '-decreasing-abscissa ').($ordi_order=="ascending" ?'': '-decreasing-ordinate ').($by_type=="true" ?'': '-by-type ');
+                    $command = $command.($absci_order=="ascending" ?'': '-decreasing-abscissa ').($ordi_order=="ascending" ?'': '-decreasing-ordinate ').($by_type=="true" ?'': '-bytype ');
                     $command = $command.($tikz =="true" ?'': '-tikz-only ');    
                     $command = $command.($clip=="true" ?'': '-no-clip ').'-clip-fix "'.($clip_fix).'" -clip-dyn "'.($clip_dyn).'"';
                     $command = escapeshellcmd($command);
                     $output = shell_exec($command);
 
-                    $pathferror = "python/tikz_beautifier.log";
-                    $ferror = fopen($pathferror, "r+");    //log on python directory
-                    if (filesize($pathferror) > 0) {
-                        $error = htmlspecialchars(fread($ferror,filesize($pathferror)));
-                        echo '<h2 class="error"><br />Sorry, an error occurred, read the log and contact the <a href="mailto:louis-max.harter@protonmail.com">admin</a> if necessary.</h2>';
-                        echo '<label for="log">Log :</label><br />';
-                        echo '<textarea name="log" placeholder="log">'.($error).'</textarea>';
-                    }
-                    fclose($ferror);
+                    // $pathferror = "./python/debug.log";
+                    // $ferror = fopen($pathferror, "r+");
+                    // if (filesize($pathferror) > 0){
+                    //     $error = htmlspecialchars(fread($ferror,filesize($pathferror)));
+                    //     echo '<h2 class="error"><br />Sorry, an error occurred, read the log and contact the <a href="mailto:louis-max.harter@protonmail.com">admin</a> if necessary.</h2>';
+                    //     echo '<label for="log">Log :</label><br />';
+                    //     echo '<textarea name="log" placeholder="log">'.($error).'</textarea>';
+                    // }
+                    // fclose($ferror);
 
                     $pathfresult = "./tikz_to_convert_clear.tikz";
                     $fresult = fopen($pathfresult, "r+");   //result on php directory
@@ -71,7 +71,7 @@
                         echo '<p>Scirpt run in '.round(microtime(true) - $start_time, 3).'s</p>';
                         $result = htmlspecialchars(fread($fresult,filesize($pathfresult)));
                         echo '<label for="result">Result :</label><br />';
-                        echo '<textarea name="result" placeholder="result">'.($result).'</textarea>';
+                        echwo '<textarea name="result" placeholder="result">'.($result).'</textarea>';
                     }
                     fclose($fresult);
 
@@ -113,35 +113,8 @@
                         <option value="4" <?php echo $round=="4" ? 'selected':'' ?>>4 digit</option>
                     </select>
                 </div>
-                <div class="sort">
-                    <label for="sort">Drawn sort :</label><br />
-                    <input type="radio" name="sort" value="true" id="sort_yes" <?php echo $sort=="true" ? 'checked':'' ?>/> 
-                    <label for="sort_yes">Yes</label><br />
-                    <input type="radio" name="sort" value="false" id="sort_no" <?php echo $sort=="true" ? '':'checked' ?>/> 
-                    <label for="color_no">No</label><br />
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>Margin and Latex default packtage :</legend>
-            <div id="contener">
-                <div class="clip">
-                    <label for="clip">Set margin (clip):</label><br />
-                    <input type="radio" name="clip" value="true" id="clip_yes" <?php echo $clip=="true" ? 'checked':'' ?>/> 
-                    <label for="clip_yes">Yes</label><br />
-                    <input type="radio" name="clip" value="false" id="clip_no" <?php echo $clip=="true" ? '':'checked' ?>/> 
-                    <label for="color_no">No</label><br />
-                </div>
-                <div class="clip_fix">
-                    <label for="clip_fix">Set const margin :</label><br />
-                    <input type="number" min="0" max="42" step="0.5" id="clip_fix" name="clip_fix" class="number_input" <?php echo ($clip_fix == "0" ? 'placeholder="0"' : 'value='.$clip_fix)?>/>
-                </div>
-                <div class="clip_dyn">
-                    <label for="clip_dyn">Set dynamic margin :</label><br />
-                    <input type="number" min="-25" max="25" step="0.05" id="clip_dyn" name="clip_dyn" class="number_input" <?php echo ($clip_dyn == "0" ? 'placeholder="0"' : 'value='.$clip_dyn)?>/>
-                </div>
                 <div class="latex">
-                    <label for="latex">Keep Latex :</label><br />
+                    <label for="latex">Keep only tikz :</label><br />
                     <input type="radio" name="latex" value="true" id="latex_yes" <?php echo $latex=="true" ? 'checked':'' ?>/> 
                     <label for="latex_yes">Keep latex</label><br />
                     <input type="radio" name="latex" value="false" id="latex_no" <?php echo $latex=="true" ? '':'checked' ?>/> 
@@ -153,6 +126,13 @@
         <fieldset>
             <legend>Advance sorting options :</legend>
             <div id="contener">
+                <div class="sort">
+                    <label for="sort">Drawn sort :</label><br />
+                    <input type="radio" name="sort" value="true" id="sort_yes" <?php echo $sort=="true" ? 'checked':'' ?>/> 
+                    <label for="sort_yes">Yes</label><br />
+                    <input type="radio" name="sort" value="false" id="sort_no" <?php echo $sort=="true" ? '':'checked' ?>/> 
+                    <label for="color_no">No</label><br />
+                </div>
                 <div class="order">
                     <label for="order">Priority order :</label><br />
                     <input type="radio" name="order" value="abscissa" id="abscissa" <?php echo $order=="abscissa" ? 'checked':'' ?>/> 
@@ -174,17 +154,29 @@
                     <input type="radio" name="ordi_order" value="descending" id="descending" <?php echo $ordi_order=="ascending" ? '':'checked' ?>/> 
                     <label for="descending">descending</label><br />
                 </div>
-                <div class="by_type">
-                    <label for="by_type">By type :</label><br />
-                    <input type="radio" name="by_type" value="true" id="by_type_true" <?php echo $by_type=="true" ? 'checked':'' ?>/> 
-                    <label for="by_type_true">ascending</label><br />
-                    <input type="radio" name="by_type" value="false" id="by_type_false" <?php echo $by_type=="true" ? '':'checked' ?>/> 
-                    <label for="by_type_false">descending</label><br />
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Margin (unrecommanded) :</legend>
+            <div id="contener">
+                <div class="clip">
+                    <label for="clip">Set margin (clip):</label><br />
+                    <input type="radio" name="clip" value="true" id="clip_yes" <?php echo $clip=="true" ? 'checked':'' ?>/> 
+                    <label for="clip_yes">Yes</label><br />
+                    <input type="radio" name="clip" value="false" id="clip_no" <?php echo $clip=="true" ? '':'checked' ?>/> 
+                    <label for="color_no">No</label><br />
+                </div>
+                <div class="clip_fix">
+                    <label for="clip_fix">Set const margin :</label><br />
+                    <input type="number" min="0" max="42" step="0.5" id="clip_fix" name="clip_fix" class="number_input" <?php echo ($clip_fix == "0" ? 'placeholder="0"' : 'value='.$clip_fix)?>/>
+                </div>
+                <div class="clip_dyn">
+                    <label for="clip_dyn">Set dynamic margin :</label><br />
+                    <input type="number" min="-25" max="25" step="0.05" id="clip_dyn" name="clip_dyn" class="number_input" <?php echo ($clip_dyn == "0" ? 'placeholder="0"' : 'value='.$clip_dyn)?>/>
                 </div>
             </div>
         </fieldset>
     </body>
-
 
     <?php include("footer.php"); ?>
 
