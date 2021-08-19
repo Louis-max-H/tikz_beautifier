@@ -281,6 +281,8 @@ class Latex(MultiDimensionalArray):
 
     def tikz_only(self, n=0):
         tikzs = [tikz for tikz in self.get_tikz()]
+        if not tikzs:
+            return
         self = tikzs[n].get_element()
 
 

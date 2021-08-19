@@ -105,7 +105,7 @@ def beautifier(file, multidimensional=False, **options):
     def tikz_only(latex, options):
         latex.tikz_only()
     run(tikz_only,
-        options.get('tikz_only', False),
+        not options.get('tikz_only', False),
         latex, options
         )
 

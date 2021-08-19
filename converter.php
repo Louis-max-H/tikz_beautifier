@@ -26,7 +26,7 @@
             $fexample = fopen($path_example, "r+");
             $exemple = htmlspecialchars(fread($fexample,filesize($path_example)));
             $tikz = (
-                ($_POST['load_exemple'] == "Load exemple") ? 
+                (isset($_POST['load_exemple'])) ? 
                     $exemple : 
                     (isset($_POST["tikz"]) ? htmlspecialchars($_POST["tikz"]) : ""));
 
@@ -40,12 +40,13 @@
             fclose($comment_file);
         ?>
         <h1>Tikz beautifier online</h1>
-        <input type="submit" name="load_exemple" value="Load exemple" />
+        <input type="submit" name="load_exemple" value="Load exemple"/>
+        <?php if(isset($_POST['sendLogs'])){echo '<strong> Thanks for the feedback!</strong>';} ?>
         
         <textarea class="user_text_area" name="tikz" placeholder="Your Tikz/Latex code here"  autofocus required><?php echo $tikz ?></textarea>
         <div id="contener_submit">
             <input type="submit" value="Submit" class="button"/>
-            <input type="reset" value="Reset" class="button"/>
+            <input type="reset"  value="Reset" class="button"/>
         </div>
 
 
@@ -94,7 +95,7 @@
                     }
                     fclose($ferror);
 
-                    if ($send_logs == "true") {
+                    if (isset($_POST['sendLogs'])) {
                         shell_exec('python3 send_logs.py');
                     }
 
