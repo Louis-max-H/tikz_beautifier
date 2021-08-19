@@ -1,6 +1,7 @@
 import os
 import time
 import logging
+from logging.handlers import RotatingFileHandler
 import argparse
 import csv
 from class_latex import Latex
@@ -9,13 +10,14 @@ dirpath, filename = os.path.split(os.path.abspath(__file__))
 logging.basicConfig(
     format='[%(levelname)-7s][%(funcName)-14s] %(message)s',
     handlers=[
-        logging.FileHandler('debug.log'),
+        RotatingFileHandler('debug.log', mode='w',
+                            backupCount=1, delay=False),
         logging.StreamHandler()
-    ]
+    ],
+    level=logging.INFO
 )
 
 logger = logging.getLogger('beautifier')
-logger.setLevel(logging.CRITICAL + 1)  # desactivate log
 
 
 def run(fct, condition=True, *args, **kargs):
@@ -28,12 +30,13 @@ def run(fct, condition=True, *args, **kargs):
             logger.debug('Skipping ' + fct.__name__)
             return None
     except Exception:
-        logger.exception('['+fct.__name__+']')
+        logger.exception('[' + fct.__name__ + ']')
         return None
 
     finally:
-        logger.debug('Ending   {:<20} in {:<6}s.'.format(
-            fct.__name__, str(round(time.time() - time_start, 3))))
+        if condition:
+            logger.debug('Ending   {:<20} in {:<6}s.'.format(
+                fct.__name__, str(round(time.time() - time_start, 3))))
 
 
 def beautifier(file, multidimensional=False, **options):

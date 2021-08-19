@@ -8,7 +8,7 @@
 \definecolor{zzttqq}{rgb}{0.6,0.2,0}
 \definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}
 \definecolor{ududff}{rgb}{0.30196078431372547,0.30196078431372547,1}
-\begin{tikzpicture}[line cap=round,line join=round,&gt;=triangle 45,x=1cm,y=1cm]
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
 \begin{axis}[
 x=1cm,y=1cm,
 axis lines=middle,

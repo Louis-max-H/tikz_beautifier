@@ -3,10 +3,6 @@
     <?php include("header.php"); ?>
     <body>
         <form method="post" action="converter.php">
-        <h1>
-            Tikz beautifier online :
-        </h1>
-
         <?php 
             function get_input($variableName, $choice, $default) {
                 return (isset($_POST[$variableName]) and in_array($_POST[$variableName], $choice)) ? $_POST[$variableName] : $default; 
@@ -25,13 +21,28 @@
             $clip = get_input("clip", $tf, "false"); 
             $clip_fix = (isset($_POST["clip_fix"]) and is_float($_POST["clip_fix"]) ? $_POST["clip_fix"] : "1");  
             $clip_dyn = (isset($_POST["clip_dyn"]) and is_float($_POST["clip_dyn"]) ? $_POST["clip_dyn"] : "0.10");  
-            $tikz = (isset($_POST["tikz"]) ? htmlspecialchars($_POST["tikz"]) : "");
+
+            $path_example = "./python/example_tikz/tikz2";
+            $fexample = fopen($path_example, "r+");
+            $exemple = htmlspecialchars(fread($fexample,filesize($path_example)));
+            $tikz = (
+                ($_POST['load_exemple'] == "Load exemple") ? 
+                    $exemple : 
+                    (isset($_POST["tikz"]) ? htmlspecialchars($_POST["tikz"]) : ""));
+
 
             $clip_fix = max(0,min($clip_fix, 42));
             $clip_dyn = max(-25,min($clip_fix, 25));
+            $send_logs = get_input("send_logs", $tf, "false");
+            $comment = (isset($_POST["comment"]) ? htmlspecialchars($_POST["comment"]) : "");
+            $comment_file = fopen("./comment.txt", "w+");
+            fwrite($comment_file, $comment);
+            fclose($comment_file);
         ?>
-
-        <textarea name="tikz" placeholder="Your Tikz code here" autofocus required><?php echo $tikz ?></textarea>
+        <h1>Tikz beautifier online</h1>
+        <input type="submit" name="load_exemple" value="Load exemple" />
+        
+        <textarea class="user_text_area" name="tikz" placeholder="Your Tikz/Latex code here"  autofocus required><?php echo $tikz ?></textarea>
         <div id="contener_submit">
             <input type="submit" value="Submit" class="button"/>
             <input type="reset" value="Reset" class="button"/>
@@ -40,14 +51,15 @@
 
         <?php 
             if (isset($_POST["tikz"])) {
-                if(strlen($tikz) > 40000){
-                    echo '<h2 class="error"><br />Sorry your code is more than 40000 characters long, use the off-line version of our <a href="https://github.com/Louis-max-H/tikz_beautifier">github</a>!</h2>';
+                if(strlen($tikz) > 400000){
+                    echo '<h2 class="error"><br />Sorry your code is more than 400000 characters long, use the off-line version of our <a href="https://github.com/Louis-max-H/tikz_beautifier">project</a>!</h2>';
                 }else{
                     $start_time = microtime(true); 
                     $tikz_file = fopen("./tikz_to_convert", "w+");
                     fwrite($tikz_file, $tikz);
                     fclose($tikz_file);
-                    $command = 'python3 python/main.py ./tikz_to_convert -tab "'.($ident).'" -round "'.($round).'" ' ;
+                    shell_exec('python3 count_site_request.py');
+                    $command = 'python3 python/main.py ./tikz_to_convert -vvv -tab "'.($ident).'" -round "'.($round).'" ' ;
                     $command = $command.($color=="true" ?'':'-no-color ').($sort=="true" ?'': '-no-sort ').($order=="abscissa" ?'': '-ordinate-last ');
                     $command = $command.($absci_order=="ascending" ?'': '-decreasing-abscissa ').($ordi_order=="ascending" ?'': '-decreasing-ordinate ').($by_type=="true" ?'': '-bytype ');
                     $command = $command.($tikz =="true" ?'': '-tikz-only ');    
@@ -55,25 +67,36 @@
                     $command = escapeshellcmd($command);
                     $output = shell_exec($command);
 
-                    // $pathferror = "./python/debug.log";
-                    // $ferror = fopen($pathferror, "r+");
-                    // if (filesize($pathferror) > 0){
-                    //     $error = htmlspecialchars(fread($ferror,filesize($pathferror)));
-                    //     echo '<h2 class="error"><br />Sorry, an error occurred, read the log and contact the <a href="mailto:louis-max.harter@protonmail.com">admin</a> if necessary.</h2>';
-                    //     echo '<label for="log">Log :</label><br />';
-                    //     echo '<textarea name="log" placeholder="log">'.($error).'</textarea>';
-                    // }
-                    // fclose($ferror);
-
                     $pathfresult = "./tikz_to_convert_clear.tikz";
                     $fresult = fopen($pathfresult, "r+");   //result on php directory
                     if (filesize($pathfresult) > 0) {
                         echo '<p>Scirpt run in '.round(microtime(true) - $start_time, 3).'s</p>';
                         $result = htmlspecialchars(fread($fresult,filesize($pathfresult)));
                         echo '<label for="result">Result :</label><br />';
-                        echo '<textarea name="result" placeholder="result">'.($result).'</textarea>';
+                        echo '<textarea class="user_text_area" name="result" placeholder="result">'.($result).'</textarea>';
                     }
                     fclose($fresult);
+
+                    echo '<input type="checkbox" id="logs" class="control">
+                    <label for="maring">Show logs</label>';
+
+                    $pathferror = "./debug.log";
+                    $ferror = fopen($pathferror, "r+");
+                    if (filesize($pathferror) > 0){
+                        $error = htmlspecialchars(fread($ferror,filesize($pathferror)));
+                        echo '<p class="conditional">
+                        <textarea class="user_text_area" name="send_logs" placeholder="log">'.($error).'</textarea>
+                        You can <a href="mailto:louis-max.harter@protonmail.com">contact me</a> if you want a fast answer or send your logs with this button, and maybe I will see it one day : <br />
+                            <textarea class="user_comment" name="comment" placeholder="Comment" maxlength="4000"></textarea>
+                            <form action="" method="post">
+                            <button name="sendLogs" value="true">Send logs to admin</button>
+                            </form></p>';
+                    }
+                    fclose($ferror);
+
+                    if ($send_logs == "true") {
+                        shell_exec('python3 send_logs.py');
+                    }
 
                     file_put_contents("python/tikz_beautifier.log", "");
                     file_put_contents("tikz_to_convert_clear.tikz", "");
@@ -127,7 +150,7 @@
             <legend>Advance sorting options :</legend>
             <div id="contener">
                 <div class="sort">
-                    <label for="sort">Drawn sort :</label><br />
+                    <label for="sort">Sort :</label><br />
                     <input type="radio" name="sort" value="true" id="sort_yes" <?php echo $sort=="true" ? 'checked':'' ?>/> 
                     <label for="sort_yes">Yes</label><br />
                     <input type="radio" name="sort" value="false" id="sort_no" <?php echo $sort=="true" ? '':'checked' ?>/> 
@@ -156,8 +179,10 @@
                 </div>
             </div>
         </fieldset>
-        <fieldset>
-            <legend>Margin (unrecommanded) :</legend>
+        <input type="checkbox" id="margin" class="control">
+        <label for="maring">Clip/Margin (unrecommanded)</label>
+        <fieldset class="conditional">
+            <legend>Margin :</legend>
             <div id="contener">
                 <div class="clip">
                     <label for="clip">Set margin (clip):</label><br />

@@ -6,7 +6,8 @@
 		<h1>Tikz_beautifier</h1>
 		<p>This project is a beautifier for <a href="https://en.wikipedia.org/wiki/PGF/TikZ">Tikz</a> code.
 		Tikz code is a derivate of <a href="https://en.wikipedia.org/wiki/LaTeX">Latex</a>, it's used for geometry.<br />
-		You can generate Tikz on <a href="https://www.geogebra.org/classic">Geogebra</a> if you go to the export options. 
+		You can generate Tikz on <a href="https://www.geogebra.org/classic">Geogebra</a> if you go to the export options.<br />
+		<img src="geogebra_to_tikz.png" alt="Geogebra to tikz" width="600"/>
 	</p>
 		<h1>Features :</h1>
 		<ul>
@@ -103,13 +104,6 @@ Clipping (experimental):<br />
 Enjoy !
 		</code></pre>
 
-		<h3>To do :</h3>
-		<ul>
-			<li>An more friendly interface</li>
-			<li>Images to explain the parameters</li>
-			<li>Host the online version</li>
-			<li>Include the readme directly on the web page</li>
-		</ul>
 		<h2>License</h2>
 		<p>GPL-3.0 License </p>
 

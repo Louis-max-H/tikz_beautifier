@@ -1,4 +1,3 @@
-
 header
 {
   display: flex;
@@ -30,6 +29,14 @@ body
    margin:auto;
 }
 
+#contener
+{
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  margin: 5px;
+}
+
 .button {
 	background: #0066A2;
 	color: white;
@@ -39,14 +46,6 @@ body
 	width: 200px;
 	font: bold 15px arial, sans-serif;
 	text-shadow:none;
-}
-
-#contener
-{
-	width: 90%;
-  display: flex;
-  justify-content: space-around;
-  margin: 5px;
 }
 
 .number_input
@@ -61,7 +60,7 @@ body
 	flex:1 1 auto;
 }
 
-textarea 
+.user_text_area 
 {
   height: 300px;
 	width: 100%;
@@ -69,3 +68,32 @@ textarea
 	justify-content: space-around;
 	margin: 5px;
 }
+
+.user_comment
+{
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 5px;
+}
+
+.control:checked ~ .conditional {
+        clip: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        position: static;
+        width: auto;
+      }
+
+      .control:not(:checked) ~ .conditional {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
