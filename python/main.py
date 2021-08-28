@@ -104,10 +104,11 @@ def beautifier(file, multidimensional=False, **options):
 
     def tikz_only(latex, options):
         latex.tikz_only()
-    run(tikz_only,
-        not options.get('tikz_only', False),
-        latex, options
-        )
+    if run(tikz_only,
+           options.get('tikz_only', False),
+           latex, options
+           ) == "no tikz detected":
+        logger.exception('[tikz_only] No tikz detected')
 
     if multidimensional:
         return latex

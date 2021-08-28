@@ -43,7 +43,7 @@
         <input type="submit" name="load_exemple" value="Load exemple"/>
         <?php if(isset($_POST['sendLogs'])){echo '<strong> Thanks for the feedback!</strong>';} ?>
         
-        <textarea class="user_text_area" name="tikz" placeholder="Your Tikz/Latex code here"  autofocus required><?php echo $tikz ?></textarea>
+        <textarea class="user_text_area" name="tikz" placeholder="Your Tikz/Latex code here"  autofocus ><?php echo $tikz ?></textarea>
         <div id="contener_submit">
             <input type="submit" value="Submit" class="button"/>
             <input type="reset"  value="Reset" class="button"/>
@@ -90,7 +90,7 @@
                         You can <a href="mailto:louis-max.harter@protonmail.com">contact me</a> if you want a fast answer or send your logs with this button, and maybe I will see it one day : <br />
                             <textarea class="user_comment" name="comment" placeholder="Comment" maxlength="4000"></textarea>
                             <form action="" method="post">
-                            <button name="sendLogs" value="true">Send logs to admin</button>
+                            <button name="sendLogs" value="true">Send logs</button>
                             </form></p>';
                     }
                     fclose($ferror);

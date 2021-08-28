@@ -18,7 +18,7 @@ class Latex(MultiDimensionalArray):
         ['\\\\documentclass', '[', ['10.3pt'], ']', '{', ['article'], '}', '\\n', '\\\\begin', ['{', ['document'], '}', '\\n', '\\\\section', '{', ['A section'], '}', '\\n'], '\\\\end', '{', ['document'], '}']
         """
         REGEX_FLAOT = r'[-+]\b[-+]?\d*\.*\d+'
-        REGEX_SPLIT_DATA = r'(\[|\]|\(|\)|\{|\}|,|\n|=|--|' + REGEX_FLAOT + ')'
+        REGEX_SPLIT_DATA = r'(\[|\]|\(|\)|\{|\}|,|\n|=|--|/|cm|' + REGEX_FLAOT + ')'
         BRACKET_OPEN = ('(', '[', '{', '\\begin')
         BRACKET_CLOSE = (')', ']', '}', '\\end')
         BRACKET_INVERSE = {
@@ -281,13 +281,12 @@ class Latex(MultiDimensionalArray):
 
     def tikz_only(self, n=0):
         tikzs = [tikz for tikz in self.get_tikz()]
+        print(tikzs)
         if not tikzs:
-            return
-        self = tikzs[n].get_element()
-
-
-latex = Latex(
-    "\\documentclass[10.3pt]{article}\\n\\\\begin{document}\\n\\section{A section}\\n\\end{document}")
+            return "no tikz detected"
+        tikz = ["\\begin"] + [tikzs[n].get_element()] + ['\\end', '{', ['tikzpicture'], '}', "\n"]
+        print(tikz)
+        self[::] = tikz
 
 if __name__ == '__main__':
     import doctest

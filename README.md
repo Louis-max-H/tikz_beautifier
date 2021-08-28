@@ -1,8 +1,11 @@
 # Tikz_beautifier
-This project is a beautifier for [Tikz](https://en.wikipedia.org/wiki/PGF/TikZ)code.
+This project is a beautifier for [Tikz](https://en.wikipedia.org/wiki/PGF/TikZ) code.
 Tikz code is a derivate of [Latex](https://en.wikipedia.org/wiki/LaTeX), it's used for geometry.
 You can generate Tikz on [Geogebra](https://www.geogebra.org/classic) if you go to the export options. 
 
+# Now host on [https://louismax.hd.free.fr/](https://louismax.hd.free.fr/)
+
+![Convert Geogebra to Tikz](https://raw.githubusercontent.com/Louis-max-H/tikz_beautifier/main/geogebra_to_tikz.png "Convert Geogebra to Tikz")
 # Features :
 - Auto name colors
 - Round float
