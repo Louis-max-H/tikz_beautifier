@@ -1,14 +1,14 @@
-[DEBUG  ][beautifier_CLI] Start from command line, Thu Aug 19 16:30:38 2021
+[DEBUG  ][beautifier_CLI] Start from command line, Sat Aug 28 12:10:40 2021
 [DEBUG  ][beautifier_CLI] Dirpath: /home/lmx/Github/tikz_beautifier/python filename main.py
 [DEBUG  ][run           ] Starting open_file
 [DEBUG  ][run           ] Ending   open_file            in 0.0   s.
 [DEBUG  ][run           ] Starting beautifier
-[DEBUG  ][beautifier    ] Start from function, Thu Aug 19 16:30:38 2021
+[DEBUG  ][beautifier    ] Start from function, Sat Aug 28 12:10:40 2021
 [DEBUG  ][beautifier    ] Dirpath: /home/lmx/Github/tikz_beautifier/python filename main.py
 [DEBUG  ][run           ] Starting Latex
-[DEBUG  ][run           ] Ending   Latex                in 0.044 s.
+[DEBUG  ][run           ] Ending   Latex                in 0.035 s.
 [DEBUG  ][run           ] Starting set_colors
-[DEBUG  ][run           ] Ending   set_colors           in 0.013 s.
+[DEBUG  ][run           ] Ending   set_colors           in 0.011 s.
 [DEBUG  ][run           ] Starting show_source
 [INFO   ][show_source   ] source:
 
@@ -62,15 +62,15 @@ ytick={-3,-2,...,6},]
 
 [DEBUG  ][run           ] Ending   show_source          in 0.0   s.
 [DEBUG  ][run           ] Starting set_clip
-[DEBUG  ][run           ] Ending   set_clip             in 0.012 s.
+[DEBUG  ][run           ] Ending   set_clip             in 0.011 s.
 [DEBUG  ][run           ] Starting round_digit
-[DEBUG  ][run           ] Ending   round_digit          in 0.006 s.
+[DEBUG  ][run           ] Ending   round_digit          in 0.005 s.
 [DEBUG  ][run           ] Starting sort_lines
-[DEBUG  ][run           ] Ending   sort_lines           in 0.005 s.
+[DEBUG  ][run           ] Ending   sort_lines           in 0.004 s.
 [DEBUG  ][run           ] Skipping tikz_only
 [DEBUG  ][run           ] Starting get_result
-[DEBUG  ][run           ] Ending   get_result           in 0.002 s.
-[DEBUG  ][run           ] Ending   beautifier           in 0.084 s.
+[DEBUG  ][run           ] Ending   get_result           in 0.001 s.
+[DEBUG  ][run           ] Ending   beautifier           in 0.068 s.
 [DEBUG  ][run           ] Starting show_result
 [INFO   ][show_result   ] Result:
 
@@ -99,9 +99,9 @@ ytick={-3,-2,...,6},]
             \clip(1.8, 2.29) rectangle (1.8, 2.29);
             \fill[line width=2pt, color=OrangeRed4, fill=OrangeRed4, fill opacity=0.1](1.5, 3) -- (3.48, 2.43) -- (2.98, 4.43) -- cycle;
             \draw[line width=2pt](2, 1) -- (1.5, 3);
-            \draw[line width=2pt](1.5, 3) circle (2.0615528128088303cm);
-            \draw[line width=2pt](2, 1) circle (2.0615528128088303cm);
-            \draw[line width=2pt, domain=-1.82:9.218101199586396] plot (\x, {(-- 6.8-0.57*\x)/1.9820508075688772});
+            \draw[line width=2pt](1.5, 3) circle (2.06cm);
+            \draw[line width=2pt](2, 1) circle (2.06cm);
+            \draw[line width=2pt, domain=-1.82:9.218101199586396] plot (\x, {(-- 6.8-0.57*\x)/1.98});
             \draw[line width=2pt, color=OrangeRed4](1.5, 3) -- (3.48, 2.43);
             \draw[line width=2pt, color=OrangeRed4](3.48, 2.43) -- (2.98, 4.43);
             \draw[line width=2pt, color=OrangeRed4](2.98, 4.43) -- (1.5, 3);
@@ -126,4 +126,4 @@ ytick={-3,-2,...,6},]
 [DEBUG  ][run           ] Starting save
 [INFO   ][save          ] file save as./tikz_to_convert_clear.tikz
 [DEBUG  ][run           ] Ending   save                 in 0.0   s.
-[DEBUG  ][beautifier_CLI] End at Thu Aug 19 16:30:38 2021s
+[DEBUG  ][beautifier_CLI] End at Sat Aug 28 12:10:40 2021s

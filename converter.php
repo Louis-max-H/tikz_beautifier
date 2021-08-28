@@ -63,7 +63,7 @@
                     $command = 'python3 python/main.py ./tikz_to_convert -vvv -tab "'.($ident).'" -round "'.($round).'" ' ;
                     $command = $command.($color=="true" ?'':'-no-color ').($sort=="true" ?'': '-no-sort ').($order=="abscissa" ?'': '-ordinate-last ');
                     $command = $command.($absci_order=="ascending" ?'': '-decreasing-abscissa ').($ordi_order=="ascending" ?'': '-decreasing-ordinate ').($by_type=="true" ?'': '-bytype ');
-                    $command = $command.($latex =="false" ?'': '-tikz-only ');    
+                    $command = $command.($latex =="false" ?'-tikz-only ': '' );
                     $command = $command.($clip=="true" ?'': '-no-clip ').'-clip-fix "'.($clip_fix).'" -clip-dyn "'.($clip_dyn).'"';
                     $command = escapeshellcmd($command);
                     $output = shell_exec($command);
@@ -111,11 +111,11 @@
                 <div class="ident">
                     <label for="ident">Identation :</label><br />
                     <select name="ident" id="ident">
-                        <option value="\t"  <?php echo $ident=="\t"?'selected':'' ?>>tab</option>
-                        <option value=""    <?php echo $ident==""?'selected':'' ?>>disable</option>
-                        <option value=" "   <?php echo $ident==" "?'selected':'' ?>>1 space</option>
-                        <option value="  "  <?php echo $ident=="  "?'selected':'' ?>>2 space</option>
-                        <option value="   " <?php echo $ident=="   "?'selected':'' ?>>3 space</option>
+                        <option value="\t"  <?php echo $ident=="\t"  ?'selected':'' ?>>tab</option>
+                        <option value=""    <?php echo $ident==""    ?'selected':'' ?>>disable</option>
+                        <option value=" "   <?php echo $ident==" "   ?'selected':'' ?>>1 space</option>
+                        <option value="  "  <?php echo $ident=="  "  ?'selected':'' ?>>2 space</option>
+                        <option value="   " <?php echo $ident=="   " ?'selected':'' ?>>3 space</option>
                         <option value="    "<?php echo $ident=="    "?'selected':'' ?>>4 space</option>
                     </select>
                 </div>

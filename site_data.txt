@@ -1,4 +1,4 @@
-{'count_request': 45,
- 'count_lines': 275,
- 'count_char': 11845,
+{'count_request': 70,
+ 'count_lines': 1450,
+ 'count_char': 70070,
  'last_logs_sended': 1629382477.6376624}
