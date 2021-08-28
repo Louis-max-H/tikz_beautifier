@@ -2,8 +2,16 @@
 <html>
     <?php include("header.php"); ?>
     <body>
-        <form method="post" action="converter.php">
+        <form action="#" method="POST">
         <?php 
+            function logg($message){
+                $message = date("H:i:s") . " - $message - ".PHP_EOL;
+                print($message);
+                flush();
+                ob_flush();
+            }
+
+
             function get_input($variableName, $choice, $default) {
                 return (isset($_POST[$variableName]) and in_array($_POST[$variableName], $choice)) ? $_POST[$variableName] : $default; 
             }
@@ -68,6 +76,7 @@
                     $command = escapeshellcmd($command);
                     $output = shell_exec($command);
 
+
                     $pathfresult = "./tikz_to_convert_clear.tikz";
                     $fresult = fopen($pathfresult, "r+");   //result on php directory
                     if (filesize($pathfresult) > 0) {
@@ -89,21 +98,18 @@
                         <textarea class="user_text_area" name="send_logs" placeholder="log">'.($error).'</textarea>
                         You can <a href="mailto:louis-max.harter@protonmail.com">contact me</a> if you want a fast answer or send your logs with this button, and maybe I will see it one day : <br />
                             <textarea class="user_comment" name="comment" placeholder="Comment" maxlength="4000"></textarea>
-                            <form action="" method="post">
                             <button name="sendLogs" value="true">Send logs</button>
-                            </form></p>';
+                            </p>';
                     }
                     fclose($ferror);
 
                     if (isset($_POST['sendLogs'])) {
                         shell_exec('python3 send_logs.py');
                     }
-
-                    file_put_contents("python/tikz_beautifier.log", "");
-                    file_put_contents("tikz_to_convert_clear.tikz", "");
                 }
             }
         ?>
+
 
         <fieldset>
             <legend>Options :</legend>
