@@ -63,7 +63,7 @@
                     $command = 'python3 python/main.py ./tikz_to_convert -vvv -tab "'.($ident).'" -round "'.($round).'" ' ;
                     $command = $command.($color=="true" ?'':'-no-color ').($sort=="true" ?'': '-no-sort ').($order=="abscissa" ?'': '-ordinate-last ');
                     $command = $command.($absci_order=="ascending" ?'': '-decreasing-abscissa ').($ordi_order=="ascending" ?'': '-decreasing-ordinate ').($by_type=="true" ?'': '-bytype ');
-                    $command = $command.($tikz =="true" ?'': '-tikz-only ');    
+                    $command = $command.($latex =="false" ?'': '-tikz-only ');    
                     $command = $command.($clip=="true" ?'': '-no-clip ').'-clip-fix "'.($clip_fix).'" -clip-dyn "'.($clip_dyn).'"';
                     $command = escapeshellcmd($command);
                     $output = shell_exec($command);
