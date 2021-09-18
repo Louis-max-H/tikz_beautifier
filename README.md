@@ -46,7 +46,7 @@ You can use the command-line version if you want to automize this program:
 On linux :
 ```sh
 sudo apt install git -y
-git clone https://github.com/edelrine/tikz_beautifier.git
+git clone https://github.com/louis-max-h/tikz_beautifier.git
 cd tikz_beautifier
 cd python
 python3 main.py example_tikz/tikz_hug 
